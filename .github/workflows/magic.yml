@@ -19,19 +19,13 @@ jobs:
         
     - name: Use howfairis to check citation
       id: vars
-      run: |
-        echo "::set-env name=HAVE_FILE::false"     
+      run: |   
         python citation_check.py --url https://github.com/${{ github.repository }}
-        if [ "$?" == "0" ]; then
-           echo "::set-env name=HAVE_FILE::true"
-        fi
 
     # Use SOMEF generate codemeta.json
     - name: Somef with repo-url input
       if: failure()
       uses: KnowledgeCaptureAndDiscovery/somef-github-action@main
-      env:
-        ACTIONS_ALLOW_UNSECURE_COMMANDS: true      
       with:
         repo-url: "https://github.com/${{ github.repository }}"
    
