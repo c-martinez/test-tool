@@ -11,12 +11,14 @@ jobs:
 
     # Run howfairis
     - name: fair-software
+      id: howfairis
       uses: fair-software/howfairis-github-action@0.1.0
       with:
         MY_REPO_URL: "https://github.com/${{ github.repository }}"
-
+        
     # Use SOMEF generate codemeta.json
     - name: Somef with repo-url input
+      if: ${{ failure() }}
       uses: KnowledgeCaptureAndDiscovery/somef-github-action@main
       with:
         repo-url: "https://github.com/${{ github.repository }}"
