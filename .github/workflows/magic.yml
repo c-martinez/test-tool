@@ -21,10 +21,10 @@ jobs:
       id: vars
       run: |   
         python citation_check.py --url https://github.com/${{ github.repository }}
+      continue-on-error: true        
 
     # Use SOMEF generate codemeta.json
     - name: Somef with repo-url input
-      if: failure()
       uses: KnowledgeCaptureAndDiscovery/somef-github-action@main
       with:
         repo-url: "https://github.com/${{ github.repository }}"
