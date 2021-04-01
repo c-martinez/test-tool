@@ -19,6 +19,8 @@ jobs:
         
     - name: Use howfairis to check citation
       id: vars
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       run: |
         echo ::set-env name=HAVE_FILE::false      
         python citation_check.py
@@ -26,6 +28,8 @@ jobs:
            echo "::set-env name=HAVE_FILE::true"
         fi
     - name: Check outputs
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       shell: pwsh
       run: echo ${{ steps.vars.outputs.HAVE_FILE }}
 
@@ -33,6 +37,8 @@ jobs:
     - name: Somef with repo-url input
       if:  env.HAVE_FILE == 'false'
       uses: KnowledgeCaptureAndDiscovery/somef-github-action@main
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true      
       with:
         repo-url: "https://github.com/${{ github.repository }}"
    
