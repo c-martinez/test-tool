@@ -19,24 +19,16 @@ jobs:
         
     - name: Use howfairis to check citation
       id: vars
-      env:
-        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-      shell: bash
       run: |
         echo "::set-env name=HAVE_FILE::false"     
         python citation_check.py --url https://github.com/${{ github.repository }}
         if [ "$?" == "0" ]; then
            echo "::set-env name=HAVE_FILE::true"
         fi
-    - name: Check outputs
-      env:
-        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-      shell: bash
-      run: echo ${{ steps.vars.outputs.HAVE_FILE }}
 
     # Use SOMEF generate codemeta.json
     - name: Somef with repo-url input
-      if:  ${{ steps.vars.outputs.HAVE_FILE }} == 'false'
+      if: failure()
       uses: KnowledgeCaptureAndDiscovery/somef-github-action@main
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: true      
@@ -45,7 +37,6 @@ jobs:
    
     # Create a PR 
     - name: Create Pull Request
-      if:  ${{ steps.vars.outputs.HAVE_FILE }} == 'false'    
       uses: peter-evans/create-pull-request@v3.8.2
       with:
         title: Generating codemeta template
