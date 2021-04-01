@@ -35,7 +35,7 @@ jobs:
 
     # Use SOMEF generate codemeta.json
     - name: Somef with repo-url input
-      if:  env.HAVE_FILE == 'false'
+      if:  ${{ steps.vars.outputs.HAVE_FILE }} == 'false'
       uses: KnowledgeCaptureAndDiscovery/somef-github-action@main
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: true      
@@ -44,7 +44,7 @@ jobs:
    
     # Create a PR 
     - name: Create Pull Request
-      if:  env.HAVE_FILE == 'false'    
+      if:  ${{ steps.vars.outputs.HAVE_FILE }} == 'false'    
       uses: peter-evans/create-pull-request@v3.8.2
       with:
         title: Generating codemeta template
