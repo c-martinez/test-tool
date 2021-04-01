@@ -31,7 +31,6 @@ jobs:
    
     # Create a PR 
     - name: Create Pull Request
-      if: failure()    
       uses: peter-evans/create-pull-request@v3.8.2
       with:
         title: Generating codemeta template
