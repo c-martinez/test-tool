@@ -21,6 +21,7 @@ jobs:
       id: vars
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+      shell: bash
       run: |
         echo "::set-env name=HAVE_FILE::false"     
         python citation_check.py --url https://github.com/${{ github.repository }}
