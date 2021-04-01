@@ -3,28 +3,41 @@ on: [push]
 jobs:
   somef_job:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6]    
     name: Test somef
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Chechout repo
       uses: actions/checkout@v2
-
-    # Run howfairis
-    - name: fair-software
-      id: howfairis
-      uses: fair-software/howfairis-github-action@0.1.0
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
       with:
-        MY_REPO_URL: "https://github.com/${{ github.repository }}"
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install howfairis
+        
+    - name: Use howfairis to check citation
+      run: |
+        echo ::set-env name=HAVE_FILE::false      
+        python citation_check.py
+        if [ "$?" == "0" ]; then
+           echo ::set-env name=HAVE_FILE::true
+        fi
         
     # Use SOMEF generate codemeta.json
     - name: Somef with repo-url input
-      if: ${{ failure() }}
+      if:  env.HAVE_FILE == 'false'
       uses: KnowledgeCaptureAndDiscovery/somef-github-action@main
       with:
         repo-url: "https://github.com/${{ github.repository }}"
    
     # Create a PR 
     - name: Create Pull Request
+      if:  env.HAVE_FILE == 'false'    
       uses: peter-evans/create-pull-request@v3.8.2
       with:
         title: Generating codemeta template
