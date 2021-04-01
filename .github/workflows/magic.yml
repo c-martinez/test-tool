@@ -23,7 +23,7 @@ jobs:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       run: |
         echo ::set-env name=HAVE_FILE::false      
-        python citation_check.py
+        python citation_check.py --url "https://github.com/${{ github.repository }}"
         if [ "$?" == "0" ]; then
            echo "::set-env name=HAVE_FILE::true"
         fi
