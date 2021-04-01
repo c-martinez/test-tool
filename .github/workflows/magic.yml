@@ -21,13 +21,17 @@ jobs:
         pip install howfairis
         
     - name: Use howfairis to check citation
+      id: vars
       run: |
         echo ::set-env name=HAVE_FILE::false      
         python citation_check.py
         if [ "$?" == "0" ]; then
-           echo ::set-env name=HAVE_FILE::true
+           echo "::set-env name=HAVE_FILE::true"
         fi
-        
+    - name: Check outputs
+      shell: pwsh
+      run: echo ${{ steps.vars.outputs.HAVE_FILE }}
+
     # Use SOMEF generate codemeta.json
     - name: Somef with repo-url input
       if:  env.HAVE_FILE == 'false'
