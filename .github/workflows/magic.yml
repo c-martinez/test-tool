@@ -38,7 +38,6 @@ jobs:
     - name: Somef with repo-url input
       if:  ${{ steps.vars.outputs.HAVE_FILE }} == 'false'
       uses: KnowledgeCaptureAndDiscovery/somef-github-action@main
-      shell: bash
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: true      
       with:
