@@ -31,13 +31,14 @@ jobs:
     - name: Check outputs
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-      shell: pwsh
+      shell: bash
       run: echo ${{ steps.vars.outputs.HAVE_FILE }}
 
     # Use SOMEF generate codemeta.json
     - name: Somef with repo-url input
       if:  ${{ steps.vars.outputs.HAVE_FILE }} == 'false'
       uses: KnowledgeCaptureAndDiscovery/somef-github-action@main
+      shell: bash
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: true      
       with:
