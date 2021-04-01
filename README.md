@@ -1,3 +1,5 @@
+[![fair-software.eu](https://img.shields.io/badge/fair--software.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8B%20%20%E2%97%8F-yellow)](https://fair-software.eu)
+
 # test-tool: A sample repository for testing HowFairIs and SOMEF
 
 howfairis is a tool to measure level of adherence to the five recommendations on fair-software.eu website. It allows users to automatically check the compliance of their code and produce a badge displaying the score of their software.
