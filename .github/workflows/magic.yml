@@ -9,6 +9,12 @@ jobs:
     - name: Chechout repo
       uses: actions/checkout@v2
 
+    # Run howfairis
+    - name: fair-software
+      uses: fair-software/howfairis-github-action@0.1.0
+      with:
+        MY_REPO_URL: "https://github.com/${{ github.repository }}"
+
     # Use SOMEF generate codemeta.json
     - name: Somef with repo-url input
       uses: KnowledgeCaptureAndDiscovery/somef-github-action@main
@@ -26,9 +32,3 @@ jobs:
         labels: automated pr
         branch: add-codemeta
         # reviewers: ${{ github.repository_owner }} ## Ideally we would add a reviewer.
-
-    # Run howfairis
-    - name: fair-software
-      uses: fair-software/howfairis-github-action@0.1.0
-      with:
-        MY_REPO_URL: "https://github.com/${{ github.repository }}"
